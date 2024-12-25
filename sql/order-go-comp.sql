@@ -1,0 +1,40 @@
+CREATE TABLE Users (
+  id INTEGER PRIMARY KEY AUTOINCREMENT,
+  name varchar(255) NOT NULL,
+  email varchar(255) UNIQUE,
+  password varchar(255) NOT NULL,
+  created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+  updated_at DATETIME DEFAULT CURRENT_TIMESTAMP
+);
+
+CREATE TABLE Orders (
+  id INTEGER PRIMARY KEY AUTOINCREMENT,
+  user_id INTEGER NOT NULL,
+  status varchar(255) NOT NULL,
+  total_items INTEGER DEFAULT 0,
+  total_prices INTEGER  DEFAULT 0.0,
+  created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+  updated_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+  FOREIGN KEY(user_id) REFERENCES Users(id)
+);
+
+CREATE TABLE OrderItems (
+  order_id INTEGER NOT NULL,
+  item_id INTEGER NOT NULL,
+  quantity INTEGER NOT NULL,
+  price decimal NOT NULL,
+  created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+  updated_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+  FOREIGN KEY(order_id) REFERENCES Orders(id)
+  FOREIGN KEY(item_id) REFERENCES Inventory(id)
+);
+
+CREATE TABLE Inventory (
+  id INTEGER PRIMARY KEY AUTOINCREMENT,
+  name varchar(255) NOT NULL,
+  description TEXT,
+  stock INTEGER NOT NULL,
+  price decimal NOT NULL,
+  created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+  updated_at DATETIME DEFAULT CURRENT_TIMESTAMP
+);

@@ -2,6 +2,8 @@ syntax = "proto3";
 
 package orders;
 
+option go_package = "./generated/orderpb";
+
 // Message Definitions
 
 message User {
@@ -38,16 +40,6 @@ message Inventory {
   string description = 3;
   int32 stock = 4;
   float price = 5;
-  string created_at = 6;
-  string updated_at = 7;
-}
-
-message Payment {
-  string id = 1;
-  string order_id = 2;
-  string payment_method = 3;
-  string status = 4;
-  float amount = 5;
   string created_at = 6;
   string updated_at = 7;
 }
