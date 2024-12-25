@@ -1,0 +1,155 @@
+syntax = "proto3";
+
+package orders;
+
+// Message Definitions
+
+message User {
+  string id = 1;
+  string name = 2;
+  string email = 3;
+  string password = 4;
+  string created_at = 5;
+  string updated_at = 6;
+}
+
+message Order {
+  string id = 1;
+  string user_id = 2;
+  string status = 3;
+  float total = 4;
+  string created_at = 5;
+  string updated_at = 6;
+}
+
+message OrderItem {
+  string id = 1;
+  string order_id = 2;
+  string item_id = 3;
+  int32 quantity = 4;
+  float price = 5;
+  string created_at = 6;
+  string updated_at = 7;
+}
+
+message Inventory {
+  string id = 1;
+  string name = 2;
+  string description = 3;
+  int32 stock = 4;
+  float price = 5;
+  string created_at = 6;
+  string updated_at = 7;
+}
+
+message Payment {
+  string id = 1;
+  string order_id = 2;
+  string payment_method = 3;
+  string status = 4;
+  float amount = 5;
+  string created_at = 6;
+  string updated_at = 7;
+}
+
+// Request and Response Definitions
+
+message GetOrderRequest {
+  int32 page = 1;
+  int32 limit = 2;
+  string jwt = 3;
+}
+
+message GetOrderResponse {
+  repeated Order orders = 1;
+  string status = 2;
+  string message = 3;
+}
+
+message GetOrderDetailRequest {
+  string order_id = 1;
+  string jwt = 2;
+}
+
+message GetOrderDetailResponse {
+  Order order = 1;
+  string status = 2;
+  string message = 3;
+}
+
+message NewOrderRequest {
+  string payload = 1;
+  string jwt = 2;
+}
+
+message NewOrderResponse {
+  string status = 1;
+  string message = 2;
+}
+
+message UpdateOrderRequest {
+  string order_id = 1;
+  string payload = 2;
+  string jwt = 3;
+}
+
+message UpdateOrderResponse {
+  string status = 1;
+  string message = 2;
+}
+
+message ConfirmOrderRequest {
+  string order_id = 1;
+  string jwt = 2;
+}
+
+message ConfirmOrderResponse {
+  string status = 1;
+  string message = 2;
+}
+
+message AddItemToOrderRequest {
+  string order_id = 1;
+  string payload = 2;
+  string jwt = 3;
+}
+
+message AddItemToOrderResponse {
+  string status = 1;
+  string message = 2;
+}
+
+message UpdateItemInOrderRequest {
+  string order_id = 1;
+  string payload = 2;
+  string jwt = 3;
+}
+
+message UpdateItemInOrderResponse {
+  string status = 1;
+  string message = 2;
+}
+
+message DeleteItemInOrderRequest {
+  string order_id = 1;
+  string payload = 2;
+  string jwt = 3;
+}
+
+message DeleteItemInOrderResponse {
+  string status = 1;
+  string message = 2;
+}
+
+// Service Definition
+
+service OrderService {
+  rpc GetOrder (GetOrderRequest) returns (GetOrderResponse);
+  rpc GetOrderDetail (GetOrderDetailRequest) returns (GetOrderDetailResponse);
+  rpc NewOrder (NewOrderRequest) returns (NewOrderResponse);
+  rpc UpdateOrder (UpdateOrderRequest) returns (UpdateOrderResponse);
+  rpc ConfirmOrder (ConfirmOrderRequest) returns (ConfirmOrderResponse);
+  rpc AddItemToOrder (AddItemToOrderRequest) returns (AddItemToOrderResponse);
+  rpc UpdateItemInOrder (UpdateItemInOrderRequest) returns (UpdateItemInOrderResponse);
+  rpc DeleteItemInOrder (DeleteItemInOrderRequest) returns (DeleteItemInOrderResponse);
+}
